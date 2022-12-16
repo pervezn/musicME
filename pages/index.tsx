@@ -2,32 +2,37 @@ import Head from 'next/head'
 import React, {useState, useEffect, use} from 'react'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { Credentials } from '../Credentials';
+import SearchCard from '../components/SearchCard'
+import { SearchContent } from "spotify-types";
+// import type { TrackSearchResponse } from "/spotify-api" 
 
 interface HomeProps {
   genres: Array<string>
 }
+// type SpotifyTrack = {
+//   album: object,
+//   artists: 
+// }
 
 export default function Home(props: HomeProps) {
   const { genres } = props
   const [query, setQuery] = useState('')
-  const spotify = Credentials()
-  console.log(genres)
+  const [res, setRes] = useState<SearchContent | undefined>()
+  console.log(process.env)
+  // console.log(genres)
 
  
- function searchRequest(e) {
+ function searchRequest(e: React.MouseEvent<HTMLInputElement>) {
+    console.log("here")
     e.preventDefault()
-    const q = 'https://api.spotify.com/v1/search' + '?q=' + query + '&type=track'
+    const q = 'https://api.spotify.com/v1/search' + '?q=' + query + '&type=track&limit=50'
     const data = fetch(q, {
       headers:{
-        Authorization: `Bearer ${spotify.OAuth_Token}`
+        Authorization: `Bearer ${process.env.OAUTH_TOKEN}`
       }
     }).then(response => response.json())
-    .then(data => console.log(data));    
+    .then(data => setRes(data));    
   }
-
-  
-
   return (
     <div >
       <Head>
@@ -45,8 +50,19 @@ export default function Home(props: HomeProps) {
           <input style={{margin: '15px'}} onChange={(e) => setQuery(e.target.value)}/>
           <input style={{margin: '15px'}} type="submit" onClick={(e) => searchRequest(e)}/>
         </form>
-        {/* {console.log(query)} */}
+        {/* {console.log(res.tracks)} */}
+        <div style={{display: 'flex', flexWrap: 'wrap'}}>
+          { res && res.tracks ?
+            res.tracks.items.map((item: any, key: any) => <SearchCard key={key} 
+                                                                      imgHref={item.album.images[2].url} 
+                                                                      albumName={item.album.name} 
+                                                                      songName={item.name} />
+            ) : null
+          } 
+      </div>
       </main>
+      
+      
 
       <footer className={styles.footer}>
         <a
@@ -66,12 +82,9 @@ export default function Home(props: HomeProps) {
 
 
 export async function getStaticProps() {
-  const spotify = Credentials()
-
-
   const data = await fetch("https://api.spotify.com/v1/recommendations/available-genre-seeds", {
     headers:{
-      Authorization: `Bearer ${spotify.OAuth_Token}`
+      Authorization: `Bearer ${process.env.OAUTH_TOKEN}`
     }
   }).then(response => response.json());
 
