@@ -9,10 +9,10 @@ interface SearchCardProps {
 const SearchCard = (props: SearchCardProps) => {
     const {imgHref, albumName, songName } = props
     return (
-        <div>
+        <div style={{margin: '20px', alignItems: 'center'}}>
             <img src={imgHref}/>
-            <span>{albumName}</span>
-            <span>{songName}</span>
+            <div>{albumName}</div>
+            <div>{songName}</div>
         </div>
     )
 }

@@ -4,6 +4,8 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { Credentials } from '../Credentials';
 import SearchCard from '../components/SearchCard'
+import { SearchContent } from "spotify-types";
+// import type { TrackSearchResponse } from "/spotify-api" 
 
 interface HomeProps {
   genres: Array<string>
@@ -16,7 +18,7 @@ interface HomeProps {
 export default function Home(props: HomeProps) {
   const { genres } = props
   const [query, setQuery] = useState('')
-  const [res, setRes] = useState<Array<object>>([])
+  const [res, setRes] = useState<SearchContent | undefined>()
   const spotify = Credentials()
   // console.log(genres)
 
@@ -24,7 +26,7 @@ export default function Home(props: HomeProps) {
  function searchRequest(e: React.MouseEvent<HTMLInputElement>) {
     console.log("here")
     e.preventDefault()
-    const q = 'https://api.spotify.com/v1/search' + '?q=' + query + '&type=track'
+    const q = 'https://api.spotify.com/v1/search' + '?q=' + query + '&type=track&limit=50'
     const data = fetch(q, {
       headers:{
         Authorization: `Bearer ${spotify.OAuth_Token}`
@@ -49,12 +51,14 @@ export default function Home(props: HomeProps) {
           <input style={{margin: '15px'}} onChange={(e) => setQuery(e.target.value)}/>
           <input style={{margin: '15px'}} type="submit" onClick={(e) => searchRequest(e)}/>
         </form>
-        <div>
-          {/* {console.log("$$$$" + typeof res.tracks)} */}
-          {
-            res.tracks.items.map((item: any, key: any) => {
-                <SearchCard key={key} imgHref={item.album.images[1].url} albumName={item.album.name} songName={item.name} />
-            })
+        {/* {console.log(res.tracks)} */}
+        <div style={{display: 'flex', flexWrap: 'wrap'}}>
+          { res && res.tracks ?
+            res.tracks.items.map((item: any, key: any) => <SearchCard key={key} 
+                                                                      imgHref={item.album.images[2].url} 
+                                                                      albumName={item.album.name} 
+                                                                      songName={item.name} />
+            ) : null
           } 
       </div>
       </main>
