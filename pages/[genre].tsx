@@ -3,7 +3,6 @@ import Head from 'next/head'
 import React, {useState, useEffect, use} from 'react'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { Credentials } from '../Credentials';
 
 interface GenreProps {
   genres: Array<string>
