@@ -2,7 +2,6 @@ import Head from 'next/head'
 import React, {useState, useEffect, use} from 'react'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { Credentials } from '../Credentials';
 import SearchCard from '../components/SearchCard'
 import { SearchContent } from "spotify-types";
 // import type { TrackSearchResponse } from "/spotify-api" 
@@ -19,7 +18,7 @@ export default function Home(props: HomeProps) {
   const { genres } = props
   const [query, setQuery] = useState('')
   const [res, setRes] = useState<SearchContent | undefined>()
-  const spotify = Credentials()
+  console.log(process.env)
   // console.log(genres)
 
  
@@ -29,7 +28,7 @@ export default function Home(props: HomeProps) {
     const q = 'https://api.spotify.com/v1/search' + '?q=' + query + '&type=track&limit=50'
     const data = fetch(q, {
       headers:{
-        Authorization: `Bearer ${spotify.OAuth_Token}`
+        Authorization: `Bearer ${process.env.OAUTH_TOKEN}`
       }
     }).then(response => response.json())
     .then(data => setRes(data));    
@@ -83,12 +82,9 @@ export default function Home(props: HomeProps) {
 
 
 export async function getStaticProps() {
-  const spotify = Credentials()
-
-
   const data = await fetch("https://api.spotify.com/v1/recommendations/available-genre-seeds", {
     headers:{
-      Authorization: `Bearer ${spotify.OAuth_Token}`
+      Authorization: `Bearer ${process.env.OAUTH_TOKEN}`
     }
   }).then(response => response.json());
 
