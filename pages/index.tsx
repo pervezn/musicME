@@ -4,6 +4,7 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import SearchCard from '../components/SearchCard'
 import { SearchContent } from "spotify-types";
+import {signOut, useSession } from 'next-auth/react'
 // import type { TrackSearchResponse } from "/spotify-api" 
 
 interface HomeProps {
@@ -15,15 +16,17 @@ interface HomeProps {
 // }
 
 export default function Home(props: HomeProps) {
+  const { data: session, status} = useSession()
   const { genres } = props
   const [query, setQuery] = useState('')
   const [res, setRes] = useState<SearchContent | undefined>()
-  console.log(process.env)
+  // console.log(process.env)
   // console.log(genres)
+  console.log(session)
 
  
  function searchRequest(e: React.MouseEvent<HTMLInputElement>) {
-    console.log("here")
+    // console.log("here")
     e.preventDefault()
     const q = 'https://api.spotify.com/v1/search' + '?q=' + query + '&type=track&limit=50'
     const data = fetch(q, {
@@ -60,6 +63,7 @@ export default function Home(props: HomeProps) {
             ) : null
           } 
       </div>
+      <button onClick={() => signOut()}>Log Out</button>
       </main>
       
       
@@ -81,19 +85,19 @@ export default function Home(props: HomeProps) {
 }
 
 
-export async function getStaticProps() {
-  const data = await fetch("https://api.spotify.com/v1/recommendations/available-genre-seeds", {
-    headers:{
-      Authorization: `Bearer ${process.env.OAUTH_TOKEN}`
-    }
-  }).then(response => response.json());
+// export async function getStaticProps() {
+//   const data = await fetch("https://api.spotify.com/v1/recommendations/available-genre-seeds", {
+//     headers:{
+//       Authorization: `Bearer ${process.env.OAUTH_TOKEN}`
+//     }
+//   }).then(response => response.json());
 
-  console.log(data);
+//   console.log(data);
   
-  return {
-    props: {
-      genres: data.genres
-    }
-  }
+//   return {
+//     props: {
+//       genres: data.genres
+//     }
+//   }
 
-}
+// }
