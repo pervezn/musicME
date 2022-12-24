@@ -3,13 +3,14 @@ import Head from 'next/head'
 import React, {useState, useEffect, use} from 'react'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { getSession } from 'next-auth/react'
 
 interface GenreProps {
-  genres: Array<string>
+  genre: Array<string>
 }
 
 export default function Genre(props: GenreProps) {
- 
+  const { genre } = props
   
 
   return (
@@ -21,7 +22,7 @@ export default function Genre(props: GenreProps) {
       </Head>
 
       <main className={styles.main}>
-      
+          <h1>{genre}</h1>
       </main>
 
       <footer className={styles.footer}>
@@ -40,22 +41,44 @@ export default function Genre(props: GenreProps) {
   )
 }
 
+// export async function getServerSideProps(context: any) {
+//   const session = await getSession(context)
+//   console.log("session in index fjlskdjfks: ", session)
+//   return {
+//     props: {
+//       session,
+//     }
+//   }
+// }
 
-// export async function getStaticProps() {
-//   const spotify = Credentials()
-
-
+// export async function getStaticPaths(props: any){
+//   const { session } = props
+//   console.log("&*&#*$&*(&*E&*#&$*&$*")
+//   console.log(session)
 //   const data = await fetch("https://api.spotify.com/v1/recommendations/available-genre-seeds", {
 //     headers:{
-//       Authorization: `Bearer ${spotify.OAuth_Token}`
+//       Authorization: `Bearer ${session?.user?.accessToken}`
 //     }
-//   }).then(response => response.json());
+//   }).then(response => response.json()).then(d => console.log("data is: ", d));
+  
+//   const genrePaths = data.genres.map((genre: string) => { return {params: { genre }}})
 
-//   console.log(data);
+//   return {
+//     params: {
+//       paths: genrePaths,
+//       callback: false,
+//     }
+//   }
+
+// }
+ 
+// export async function getStaticProps(props: any) {
+//   const  { params } = props
+//   console.log('AAAAAAAAAAAHHHHHHHHHHHHHHH')
   
 //   return {
 //     props: {
-//       genres: data.genres
+//       genre: params.genre
 //     }
 //   }
 
