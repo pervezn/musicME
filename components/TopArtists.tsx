@@ -19,7 +19,7 @@ const TopArtistContainer = () => {
 }
 
 
-const TopArtistCard = (props: any) => {
+export const TopArtistCard = (props: any) => {
     const {artist} = props
     const {data: session } = useSession();
     // const topArts = useRecoilValue<any | undefined>(topTrackState)
@@ -27,7 +27,7 @@ const TopArtistCard = (props: any) => {
     return (
         <div className='text-white p-5'> 
             <img  className='flex justify-center' src={artist.images[2].url } />
-            <p className='flex justify-center p-3'>{artist.name}</p>
+            <a href={`/artists/${artist.name}?q=${artist.id}`} className='flex justify-center p-3'>{artist.name}</a>
             <p className='flex justify-center '>Followers: {artist.followers.total}</p>
         </div>
     )

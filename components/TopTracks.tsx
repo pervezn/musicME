@@ -6,9 +6,10 @@ import { useRecoilValue } from 'recoil';
 
 
 
-const TopTracksContainer = () => {
+const TopTracksContainer = (props:any) => {
+    const { topTracks } = props
     const {data: session } = useSession();
-    const topTracks = useRecoilValue(topTrackState)
+    // const topTracks = useRecoilValue(topTrackState)
     console.log("topTracks ", topTracks)
     return (
         <div>
@@ -38,8 +39,8 @@ const TopTracksCard = (props: any) => {
             <p  className='p-5  flex items-center  '>{order}</p>
             <img  className='p-5 pr-0' src={track.album.images[2].url } />
             <p className='p-5 flex  items-center '>{track.name}</p>
-            <p className='p-5 flex  items-center '>{track.artists[0].name}</p>
-            <p className='p-5  flex items-center  '>{track.album.name}</p>
+            <a className='p-5 flex  items-center' href={`/artists/${track.artists[0].name}?q=${track.artists[0].id}`}>{track.artists[0].name}</a>
+            <a className='p-5  flex items-center' href={`/albums/${track.album.name}`}>{track.album.name}</a>
 
         </div>
     )

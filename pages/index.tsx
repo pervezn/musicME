@@ -63,7 +63,7 @@ export default function Home(props: HomeProps) {
       <div className='bg-black h-screen overflow-hidden'>
         <main className='flex '>
           <SideBar />
-          <MainContent />
+          <MainContent topTracks={topTracks}/>
         </main>
       </div>
       
