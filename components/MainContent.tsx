@@ -8,7 +8,8 @@ import { HomeIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 
 
-const MainContent = () => {
+const MainContent = (props: any) => {
+    const {topTracks} = props
     const {data: session } = useSession();
 
     return (
@@ -34,7 +35,7 @@ const MainContent = () => {
            <section className='items-end space-x-7 h-80 p-8'>
             <h1 className='text-2xl md:text-3xl xl:text-5xl font-bold text-white'>Top Tracks</h1>
             <div className='pt-8 pl-8'>
-                <TopTracksContainer />
+                <TopTracksContainer  topTracks={topTracks}/>
             </div>
            </section>       
         </div>
