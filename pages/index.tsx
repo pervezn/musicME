@@ -6,6 +6,7 @@ import {signOut, useSession, getSession } from 'next-auth/react'
 import useSpotify from '../hooks/useSpotify'
 import { useRecoilState } from 'recoil'
 import { topTrackState } from '../atoms/topTracksAtom'
+import { topArtistState } from '../atoms/topArtistsAtom'
 import SideBar from '../components/SideBar'
 import MainContent from '../components/MainContent'
 // import type { TrackSearchResponse } from "/spotify-api" 
@@ -19,7 +20,7 @@ export default function Home(props: HomeProps) {
   const { data: session, status} = useSession()
   const spotifyApi = useSpotify();
   const [query, setQuery] = useState('')
-  const [topArtists, setTopArtists] = useState<any | undefined>()
+  const [topArtists, setTopArtists] = useRecoilState<any | undefined>(topArtistState)
   const [topTracks, setTopTracks] = useRecoilState<any | undefined>(topTrackState)
 
   // console.log("session in index: ", session)
