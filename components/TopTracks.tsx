@@ -10,7 +10,7 @@ const TopTracksContainer = (props:any) => {
     const { topTracks } = props
     const {data: session } = useSession();
     // const topTracks = useRecoilValue(topTrackState)
-    console.log("topTracks ", topTracks)
+    // console.log("topTracks ", topTracks)
     return (
         <div>
             <div className='text-gray-500 flex'>
@@ -33,6 +33,7 @@ const TopTracksCard = (props: any) => {
     const {order, track} = props
     const {data: session } = useSession();
     const topTracks = useRecoilValue<any | undefined>(topTrackState)
+    console.log("INDIVIDUAL TRACK IS: ", track)
 
     return (
         <div className='flex text-white'> 
@@ -40,8 +41,7 @@ const TopTracksCard = (props: any) => {
             <img  className='p-5 pr-0' src={track.album.images[2].url } />
             <p className='p-5 flex  items-center '>{track.name}</p>
             <a className='p-5 flex  items-center' href={`/artists/${track.artists[0].name}?q=${track.artists[0].id}`}>{track.artists[0].name}</a>
-            <a className='p-5  flex items-center' href={`/albums/${track.album.name}`}>{track.album.name}</a>
-
+            <a className='p-5  flex items-center' href={`/albums/${track.album.name}?q=${track.album.id}`}>{track.album.name}</a>
         </div>
     )
 }

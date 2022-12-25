@@ -26,6 +26,7 @@ const SideBar = () => {
                     <p>Liked Songs</p>
                 </button>
                 <hr className='border-t-[0.1px] border-gray-900'/>
+                {/* <p>Project....</p>
                 <p>Project....</p>
                 <p>Project....</p>
                 <p>Project....</p>
@@ -48,8 +49,7 @@ const SideBar = () => {
                 <p>Project....</p>
                 <p>Project....</p>
                 <p>Project....</p>
-                <p>Project....</p>
-                <p>Project....</p>
+                <p>Project....</p> */}
             </div>
         </div>
     )

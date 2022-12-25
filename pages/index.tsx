@@ -7,8 +7,10 @@ import useSpotify from '../hooks/useSpotify'
 import { useRecoilState } from 'recoil'
 import { topTrackState } from '../atoms/topTracksAtom'
 import { topArtistState } from '../atoms/topArtistsAtom'
+import Layout from '../components/Layout'
 import SideBar from '../components/SideBar'
-import MainContent from '../components/MainContent'
+
+import HomeContent from '../components/HomeContent';
 // import type { TrackSearchResponse } from "/spotify-api" 
 
 interface HomeProps {
@@ -31,7 +33,7 @@ export default function Home(props: HomeProps) {
     /* Get a User’s Top Artists*/
     spotifyApi.getMyTopArtists()
       .then(function(data:any) {
-        console.log(data.body.items);
+        // console.log(data.body.items);
         setTopArtists(data.body.items)
       }, function(err: any) {
         console.log('Something went wrong!', err);
@@ -59,13 +61,11 @@ export default function Home(props: HomeProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-
-      <div className='bg-black h-screen overflow-hidden'>
-        <main className='flex '>
-          <SideBar />
-          <MainContent topTracks={topTracks}/>
-        </main>
-      </div>
+      <Layout> 
+        <h1 className='text-2xl md:text-3xl xl:text-5xl font-bold text-white'>Top Artists</h1>
+        <HomeContent topTracks={topTracks} />
+        {/* <div className='text-white'>HELLO WORLDS</div> */}
+      </Layout>
       
       
 
@@ -84,21 +84,3 @@ export async function getServerSideProps(context: any) {
       }
     }
 }
-
-
-// export async function getStaticProps() {
-//   const data = await fetch("https://api.spotify.com/v1/recommendations/available-genre-seeds", {
-//     headers:{
-//       Authorization: `Bearer ${process.env.OAUTH_TOKEN}`
-//     }
-//   }).then(response => response.json());
-
-//   console.log(data);
-  
-//   return {
-//     props: {
-//       genres: data.genres
-//     }
-//   }
-
-// }
