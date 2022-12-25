@@ -6,7 +6,7 @@ import HomeContent from './HomeContent'
 
 const Layout = (props: any) => {
     const { children } = props
-    console.log("CHILDREN ARE HERE: ",children)
+    // console.log("CHILDREN ARE HERE: ",children)
     return (
 
       <div className='bg-black h-screen overflow-hidden'>

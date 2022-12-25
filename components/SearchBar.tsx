@@ -1,7 +1,6 @@
 import React, {useState, useEffect, use} from 'react'
 import {signOut, useSession, getSession } from 'next-auth/react'
 import useSpotify from '../hooks/useSpotify'
-import SearchCard from './SearchCard'
 import TopTracksContainer from './TopTracks'
 
 
