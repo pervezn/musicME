@@ -3,7 +3,7 @@ import {NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
 export const config = {
-    matcher: ['/login', '/']
+    matcher: ['/login', '/', '/likedSongs', '/search', '/artists', '/albums']
 }
 
 export async function middleware(req: NextRequest) {

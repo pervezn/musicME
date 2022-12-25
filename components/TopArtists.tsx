@@ -7,7 +7,7 @@ import { useRecoilValue } from 'recoil';
 
 const TopArtistContainer = () => {
     const topArtists = useRecoilValue(topArtistState)
-    console.log("topArtist ", topArtists)
+    // console.log("topArtist ", topArtists)
     return (
         <div className='flex flex-wrap'>
             <div className='text-white flex flex-wrap'> 

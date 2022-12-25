@@ -42,7 +42,7 @@ const ArtistDetails = () => {
           //Get related artists
           spotifyApi.getArtistRelatedArtists(id)
             .then(function(data: any) {
-                console.log('Related Artist', data.body);
+                // console.log('Related Artist', data.body);
                 setRelatedArtists(data.body.artists)
             }, function(err: any) {
                 console.log('Something went wrong!', err);

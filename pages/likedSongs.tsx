@@ -16,7 +16,7 @@ const LikedSongs = () => {
                 limit : 50,
                 offset: 1
               }).then(function(data:any) {
-                console.log("LIKED SONGS: ", data.body.items);
+                // console.log("LIKED SONGS: ", data.body.items);
                 setSongs(data.body.items)
               }, function(err: any) {
                 console.log('Something went wrong!', err);

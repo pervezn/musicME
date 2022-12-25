@@ -33,7 +33,7 @@ const TopTracksCard = (props: any) => {
     const {order, track} = props
     const {data: session } = useSession();
     const topTracks = useRecoilValue<any | undefined>(topTrackState)
-    console.log("INDIVIDUAL TRACK IS: ", track)
+    // console.log("INDIVIDUAL TRACK IS: ", track)
 
     return (
         <div className='flex text-white'> 
