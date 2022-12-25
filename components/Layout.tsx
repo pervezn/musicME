@@ -8,7 +8,6 @@ const Layout = (props: any) => {
     const { children } = props
     // console.log("CHILDREN ARE HERE: ",children)
     return (
-
       <div className='bg-black h-screen overflow-hidden'>
         <main className='flex '>
             <SideBar />
@@ -25,7 +24,7 @@ const MainContentLayout = (props: any) => {
     const {children} = props
     const {data: session } = useSession();
     return(
-        <div className='flex-grow overflow-y-scroll scrollbar-hide h-screen w-screen'> 
+        <div className='flex-grow overflow-y-scroll scrollbar-hide h-screen'> 
         <header className='absolute top-5 right-8'>
              <div className='flex items-center bg-black space-x-3 opacity-90 hover:opacity-80 cursor-pointer rounded-full p-1 pr-2 text-white'>
                  <img className='rounded-full w-10 h-10' src={session?.user?.image} alt="profile_pic" />
