@@ -2,6 +2,7 @@ import React, {useState, useEffect, use} from 'react'
 import {signOut, useSession, getSession } from 'next-auth/react'
 import useSpotify from '../hooks/useSpotify'
 import SearchCard from './SearchCard'
+import TopTracksContainer from './TopTracks'
 
 
 const SearchBar = () => {
@@ -22,22 +23,16 @@ const SearchBar = () => {
       }
 
     return (
-        <div>
-        <form>
-        <label style={{margin: '15px'}}>Search Artist</label>
-        <input style={{margin: '15px'}} onChange={(e) => setQuery(e.target.value)}/>
-        <input style={{margin: '15px'}} type="submit" onClick={(e) => searchRequest(e)}/>
-      </form>
-      <div style={{display: 'flex', flexWrap: 'wrap'}}>
-        { 
-          tracks?.map((item: any, key: any) => <SearchCard key={key} 
-                                                                    imgHref={item.album.images[2].url} 
-                                                                    albumName={item.album.name} 
-                                                                    songName={item.name} />
-          )
-        } 
-      </div>
-        </div>
+        <div className=''>
+          <form className='flex justify-center'>
+            <label className='text-white mr-5'>Search Artist</label>
+            <input className='mr-10 pl-2' onChange={(e) => setQuery(e.target.value)}/>
+            <input className='text-white' type="submit" onClick={(e) => searchRequest(e)}/>
+          </form>
+          <div className='mt-16 m-8 ml-32'>
+            {query.length > 0 ? <TopTracksContainer topTracks={tracks}/> : null}
+          </div>
+       </div>
     )
 }
 

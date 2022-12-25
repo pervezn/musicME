@@ -26,7 +26,7 @@ export const TopArtistCard = (props: any) => {
 
     return (
         <div className='text-white p-5'> 
-            <img  className='flex justify-center' src={artist.images[2].url } />
+            <img  className='flex justify-center' src={artist?.images[2]?.url } alt={artist.name}/>
             <a href={`/artists/${artist.name}?q=${artist.id}`} className='flex justify-center p-3'>{artist.name}</a>
             <p className='flex justify-center '>Followers: {artist.followers.total}</p>
         </div>
