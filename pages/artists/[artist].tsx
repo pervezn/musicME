@@ -11,8 +11,6 @@ const ArtistDetails = () => {
     const router = useRouter();
     const spotifyApi = useSpotify();
     const { data: session, status} = useSession()
-    // console.log('&&&&&&&&&&: ', router.query)
-    const artistName = router.query.artist 
     const id = router.query.q
 
     const [artist, setArtist] = useState()
@@ -24,7 +22,6 @@ const ArtistDetails = () => {
         if(spotifyApi.getAccessToken()){
             // Get an artist
             spotifyApi.getArtist(id).then(function(data: any) {
-                // console.log('Artist information', data.body);
                 setArtist(data.body)
             }, function(err: any) {
             console.error(err);
@@ -56,7 +53,6 @@ const ArtistDetails = () => {
             <ArtistHeader artist={artist} />
             <div className='m-16 mt-8'><TopTracksContainer topTracks={artistTopTracks} /></div>
             <RelatedArtists relatedArtists={relatedArtists} />
-            
         </Layout>
     )
 } 
@@ -76,12 +72,9 @@ const ArtistHeader = (props: any) => {
                         <div className='ml-5' >
                             <h1 className='mt-5 font-bold text-white text-2xl md:text-3xl xl:text-5xl'>{artist.name}</h1>
                             <p className='text-white text-sm'>Followers: {artist.followers.total}</p>
-                            {/* <p className='text-white text-sm'>Rank: {artist.popularity}</p> */}
                         </div>   
                     </div>
-                    
                 </div>
-                
                 : null
             }
         </div>

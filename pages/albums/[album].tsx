@@ -84,10 +84,12 @@ const AlbumContainer = (props:any) => {
     return (
         <div className='m-8 ml-16'>
             <div className='text-gray-500 flex'>
-                <p className='pl-5 '>#</p>
-                <p className='pl-20'>TRACK</p>
-                <p className='pl-40'>ARTISTS</p>
-                <div className='pl-40'><ClockIcon className='h-5 w-5'/></div>
+                <div className='flex items-center basis-1/3'>
+                    <p className='pl-5 '>#</p>
+                    <p className='pl-20'>TRACK</p>
+                </div>
+                <p className='pl-40 basis-1/2'>ARTISTS</p>
+                <div className='pl-40 basis-1/2'><ClockIcon className='h-5 w-5'/></div>
             </div>
             <div className='text-white'> 
                 {album ? album.tracks.items.map((track: any) => <AlbumTracksCard order={track.track_number} key={track.id} track={track}/>) : null}
@@ -106,15 +108,18 @@ const AlbumTracksCard = (props: any) => {
     function millisToMinutesAndSeconds(millis: number) {
         let minutes = Math.floor(millis / 60000);
         let seconds = ((millis % 60000) / 1000).toFixed(0);
-        return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+        return minutes + ":" + (Number(seconds) < 10 ? '0' : '') + seconds;
     }
 
     return (
-        <div className='flex text-white'> 
-            <p  className='p-5  flex items-center  '>{order}</p>
-            <p className='p-5 flex  items-center '>{track.name}</p>
-            <a className='p-5 flex  items-center' href={`/artists/${track.artists[0].name}?q=${track.artists[0].id}`}>{track.artists[0].name}</a>
-            <p className='p-5 flex  items-center '>{millisToMinutesAndSeconds(track.duration_ms)}</p>
+        <div className='flex text-white items-center'> 
+            <div className='flex items-center basis-1/2'>
+                <p  className='p-5   '>{order}</p>
+                <p className='p-5  '>{track.name}</p>
+                
+            </div>
+            <a className='p-5 basis-1/2' href={`/artists/${track.artists[0].name}?q=${track.artists[0].id}`}>{track.artists[0].name}</a>
+            <p className='p-5 basis-1/2 '>{millisToMinutesAndSeconds(track.duration_ms)}</p>
         </div>
     )
 }
