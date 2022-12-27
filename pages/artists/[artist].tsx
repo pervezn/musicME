@@ -5,43 +5,44 @@ import useSpotify from '../../hooks/useSpotify'
 import TopTracksContainer from '../../components/TopTracks'
 import { TopArtistCard } from '../../components/TopArtists'
 import Layout from '../../components/Layout'
+import {SingleArtistResponse, ArtistsTopTracksResponse, ArtistsRelatedArtistsResponse } from 'types/spotify-api'
 
 
 const ArtistDetails = () => {
     const router = useRouter();
     const spotifyApi = useSpotify();
     const { data: session, status} = useSession()
-    const id = router.query.q
+    const id: string | string[] | undefined = router.query.q
 
-    const [artist, setArtist] = useState()
-    const [artistTopTracks, setArtistTopTracks] = useState()
-    const [relatedArtists, setRelatedArtists] = useState()
+    const [artist, setArtist] = useState<SpotifyApi.SingleArtistResponse>()
+    const [artistTopTracks, setArtistTopTracks] = useState<SpotifyApi.ArtistsTopTracksResponse>()
+    const [relatedArtists, setRelatedArtists] = useState<SpotifyApi.ArtistsRelatedArtistsResponse>()
 
 
     useEffect(() => {
         if(spotifyApi.getAccessToken()){
             // Get an artist
-            spotifyApi.getArtist(id).then(function(data: any) {
-                setArtist(data.body)
-            }, function(err: any) {
+            spotifyApi.getArtist(String(id)).then((data: SpotifyApi.SingleArtistResponse) => {
+                setArtist(data)
+            }, function(err: unknown) {
             console.error(err);
             });
 
           // Get an artist's top tracks
-          spotifyApi.getArtistTopTracks(id, 'US')
-            .then(function(data: any) {
+          spotifyApi.getArtistTopTracks(String(id), 'US')
+            .then((data: SpotifyApi.ArtistsTopTracksResponse) => {
                 // console.log('Artist Top Tracks', data.body);
-                setArtistTopTracks(data.body.tracks)
-            }, function(err: any) {
+                setArtistTopTracks(data)
+            }, function(err: unknown) {
                 console.log('Something went wrong!', err);
             });
       
           //Get related artists
-          spotifyApi.getArtistRelatedArtists(id)
-            .then(function(data: any) {
+          spotifyApi.getArtistRelatedArtists(String(id))
+            .then((data: SpotifyApi.ArtistsRelatedArtistsResponse) => {
                 // console.log('Related Artist', data.body);
-                setRelatedArtists(data.body.artists)
-            }, function(err: any) {
+                setRelatedArtists(data)
+            }, function(err: unknown) {
                 console.log('Something went wrong!', err);
             });
         }
@@ -50,9 +51,9 @@ const ArtistDetails = () => {
 
     return (
         <Layout>
-            <ArtistHeader artist={artist} />
-            <div className='m-16 mt-8'><TopTracksContainer topTracks={artistTopTracks} /></div>
-            <RelatedArtists relatedArtists={relatedArtists} />
+            <ArtistHeader artist={artist?.body} />
+            <div className='m-16 mt-8'><TopTracksContainer topTracks={artistTopTracks?.body.tracks} /></div>
+            <RelatedArtists relatedArtists={relatedArtists?.body.artists} />
         </Layout>
     )
 } 

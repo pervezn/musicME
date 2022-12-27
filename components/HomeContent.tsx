@@ -4,7 +4,6 @@ import useSpotify from '../hooks/useSpotify'
 import TopTracksContainer from './TopTracks'
 import TopArtistContainer from './TopArtists'
 
-import { HomeIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 
 

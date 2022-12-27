@@ -3,22 +3,22 @@ import {signOut, useSession, getSession } from 'next-auth/react'
 import useSpotify from '../hooks/useSpotify'
 import Layout from '../components/Layout'
 import moment from "moment"
-
+// import {UsersSavedTracksResponse} from 'types/spotify-api';
 
 const LikedSongs = () => {
     const spotifyApi = useSpotify();
     const { data: session, status} = useSession()
-    const [songs, setSongs] = useState()
+    const [songs, setSongs] = useState<SpotifyApi.UsersSavedTracksResponse>()
 
     useEffect(() => {
         if(spotifyApi.getAccessToken()){
             spotifyApi.getMySavedTracks({
                 limit : 50,
                 offset: 1
-              }).then(function(data:any) {
+              }).then((data: SpotifyApi.UsersSavedTracksResponse) => {
                 // console.log("LIKED SONGS: ", data.body.items);
-                setSongs(data.body.items)
-              }, function(err: any) {
+                setSongs(data)
+              }, function(err: unknown) {
                 console.log('Something went wrong!', err);
               });
         }
@@ -27,7 +27,7 @@ const LikedSongs = () => {
     return (
         <Layout>
             <h1 className='text-2xl md:text-3xl xl:text-5xl font-bold text-white'>Liked Songs</h1>
-            <LikedSongsContainer tracks={songs} />
+            <LikedSongsContainer tracks={songs?.body.items} />
         </Layout>
     )
 }
@@ -52,7 +52,7 @@ const LikedSongsContainer = (props:any) => {
                 <p className='pl-20 basis-1/2'>DATE ADDED</p>
             </div>
             <div className='text-white'> 
-            {tracks ? tracks.map((track: any, i: number) => <LikedSongsCard order={i + 1} key={track.track.id} track={track}/>) : null}
+            {tracks ? tracks.map((track: SpotifyApi.SingleTrackResponse, i: number) => <LikedSongsCard order={i + 1} key={track.track.id} track={track}/>) : null}
             </div>
         </div>
         
