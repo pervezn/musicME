@@ -6,6 +6,7 @@ import TopTracksContainer from '../components/TopTracks'
 import SearchBar from '../components/SearchBar'
 
 
+
 const Search = () => {
     const spotifyApi = useSpotify();
     const { data: session, status} = useSession()
@@ -16,10 +17,10 @@ const Search = () => {
             spotifyApi.getMySavedTracks({
                 limit : 50,
                 offset: 1
-              }).then(function(data:any) {
+              }).then((data: SpotifyApi.UsersSavedTracksResponse) => {
                 // console.log("LIKED SONGS: ", data.body.items);
-                setSongs(data.body.items)
-              }, function(err: any) {
+                setSongs(data?.body.items)
+              }, function(err: unknown) {
                 console.log('Something went wrong!', err);
               });
         }

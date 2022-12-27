@@ -4,6 +4,7 @@ import {signOut, useSession, getSession } from 'next-auth/react'
 import useSpotify from '../../hooks/useSpotify'
 import Layout from '../../components/Layout'
 import { ClockIcon } from "@heroicons/react/24/outline";
+// import {SingleAlbumResponse} from 'types/spotify-api';
 // import TopTracksContainer from '../../components/TopTracks'
 
 const AlbumDetails = () => {
@@ -13,18 +14,18 @@ const AlbumDetails = () => {
     const { data: session, status} = useSession()
     // console.log('&&&&&&&&&&: ', router.query)
     const artistName = router.query.artist 
-    const id = router.query.q
+    const id: string | string[] | undefined = router.query.q
 
-    const [album, setAlbum] = useState()
+    const [album, setAlbum] = useState<SpotifyApi.SingleAlbumResponse>()
 
 
     useEffect(() => {
         if(spotifyApi.getAccessToken()){
             spotifyApi.getAlbum(id)
-            .then(function(data: any) {
+            .then((data: SpotifyApi.SingleAlbumResponse) => {
                 // console.log('Album information', data.body);
-                setAlbum(data.body)
-            }, function(err: any) {
+                setAlbum(data)
+            }, function(err: unknown) {
                 console.error(err);
             });
 
@@ -35,8 +36,8 @@ const AlbumDetails = () => {
         // console.log('%%%%%%%%%%: ', album.tracks.items)
     return (
         <Layout>
-           <AlbumHeader album={album}/>
-           <AlbumContainer album={album} />
+           <AlbumHeader album={album?.body}/>
+           <AlbumContainer album={album?.body} />
         </Layout>
     )
 } 

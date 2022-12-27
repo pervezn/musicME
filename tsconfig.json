@@ -13,7 +13,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "types":["node","react", "react-dom", "spotify-api", "spotify-web-api-node"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/TopTracks.tsx"],
   "exclude": ["node_modules"]

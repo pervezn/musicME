@@ -2,12 +2,13 @@ import React, {useState, useEffect, use} from 'react'
 import {signOut, useSession, getSession } from 'next-auth/react'
 import useSpotify from '../hooks/useSpotify'
 import TopTracksContainer from './TopTracks'
+// import {TrackSearchResponse} from 'types/spotify-api';
 
 
 const SearchBar = () => {
     const { data: session, status} = useSession()
     const spotifyApi = useSpotify();
-    const [tracks, setTracks] = useState<any | undefined>()
+    const [tracks, setTracks] = useState<SpotifyApi.TrackSearchResponse>()
     const [query, setQuery] = useState('')
 
 
@@ -15,7 +16,7 @@ const SearchBar = () => {
         // console.log("here")
         e.preventDefault()
         if(spotifyApi.getAccessToken()){
-          spotifyApi.searchTracks(`artist:${query}`).then((data: any) => setTracks(data.body.tracks.items)).catch((err:any)=> {
+          spotifyApi.searchTracks(`artist:${query}`).then((data: SpotifyApi.TrackSearchResponse) => setTracks(data)).catch((err: unknown)=> {
             console.log('Something went wrong: Tracks', err)
           })
         }
@@ -29,7 +30,7 @@ const SearchBar = () => {
             <input className='text-white' type="submit" onClick={(e) => searchRequest(e)}/>
           </form>
           <div className='mt-16 m-8 ml-32'>
-            {query.length > 0 ? <TopTracksContainer topTracks={tracks}/> : null}
+            {query.length > 0 ? <TopTracksContainer topTracks={tracks?.body.tracks.items}/> : null}
           </div>
        </div>
     )

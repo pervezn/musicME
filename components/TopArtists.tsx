@@ -6,12 +6,12 @@ import { useRecoilValue } from 'recoil';
 
 
 const TopArtistContainer = () => {
-    const topArtists = useRecoilValue(topArtistState)
+    const topArtists = useRecoilValue<SpotifyApi.UsersTopArtistsResponse>(topArtistState)
     // console.log("topArtist ", topArtists)
     return (
         <div className='flex flex-wrap'>
             <div className='text-white flex flex-wrap'> 
-              {topArtists ? topArtists.map((artist: any) => <TopArtistCard key={artist.id} artist={artist}/>) : null}
+              {topArtists ? topArtists.body.items.map((artist: SpotifyApi.SingleArtistResponse) => <TopArtistCard key={artist.id} artist={artist}/>) : null}
             </div>
         </div>
         
