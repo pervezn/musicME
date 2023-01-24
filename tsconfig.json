@@ -14,7 +14,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "types":["node","react", "react-dom", "spotify-api", "spotify-web-api-node"]
+    "watch": true,
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/TopTracks.tsx"],
   "exclude": ["node_modules"]

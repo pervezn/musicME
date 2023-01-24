@@ -16,7 +16,7 @@ const SearchBar = () => {
         // console.log("here")
         e.preventDefault()
         if(spotifyApi.getAccessToken()){
-          spotifyApi.searchTracks(`artist:${query}`).then((data: SpotifyApi.TrackSearchResponse) => setTracks(data)).catch((err: unknown)=> {
+          spotifyApi.searchTracks(`artist:${query}`).then((data: any) => setTracks(data)).catch((err: unknown)=> {
             console.log('Something went wrong: Tracks', err)
           })
         }
@@ -30,7 +30,7 @@ const SearchBar = () => {
             <input className='text-white' type="submit" onClick={(e) => searchRequest(e)}/>
           </form>
           <div className='mt-16 m-8 ml-32'>
-            {query.length > 0 ? <TopTracksContainer topTracks={tracks?.body.tracks.items}/> : null}
+            {query.length > 0 ? <TopTracksContainer topTracks={tracks?.body?.tracks.items}/> : null}
           </div>
        </div>
     )

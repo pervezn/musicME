@@ -62,6 +62,7 @@ export default function Home(props: HomeProps) {
 
       <Layout> 
         <h1 className='text-2xl md:text-3xl xl:text-5xl font-bold text-white'>Top Artists</h1>
+        {console.log(topTracks.body.items)}
         <HomeContent topTracks={topTracks.body.items} />
         {/* <div className='text-white'>HELLO WORLDS</div> */}
       </Layout>
