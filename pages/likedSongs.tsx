@@ -1,44 +1,54 @@
-import React, {useState, useEffect, use} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import {signOut, useSession, getSession } from 'next-auth/react'
 import useSpotify from '../hooks/useSpotify'
 import Layout from '../components/Layout'
 import moment from "moment"
+// import {UsersSavedTracksResponse} from 'types/spotify-api';
 
-
-const LikedSongs = () => {
+const LikedSongs: React.FC = () => {
     const spotifyApi = useSpotify();
     const { data: session, status} = useSession()
-    const [songs, setSongs] = useState()
+    const [songs, setSongs] = useState<SpotifyApi.UsersSavedTracksResponse>()
 
-    useEffect(() => {
-        if(spotifyApi.getAccessToken()){
-            spotifyApi.getMySavedTracks({
-                limit : 50,
-                offset: 1
-              }).then(function(data:any) {
-                // console.log("LIKED SONGS: ", data.body.items);
-                setSongs(data.body.items)
-              }, function(err: any) {
-                console.log('Something went wrong!', err);
-              });
+    const fetchMySavedTracks = useCallback(async () => {
+        try {
+          const data = await spotifyApi.getMySavedTracks({
+            limit: 50,
+            offset: 1,
+          });
+          setSongs(data.body);
+        } catch (err) {
+          console.log("Something went wrong!", err);
         }
-       }, [session, spotifyApi])
+      }, [spotifyApi]);
+    
+      useEffect(() => {
+        if (spotifyApi.getAccessToken()) {
+          fetchMySavedTracks();
+        }
+      }, [fetchMySavedTracks, session, spotifyApi]);
 
     return (
         <Layout>
             <h1 className='text-2xl md:text-3xl xl:text-5xl font-bold text-white'>Liked Songs</h1>
-            <LikedSongsContainer tracks={songs} />
+            { songs ? <LikedSongsContainer tracks={songs?.body.items} /> : null }
         </Layout>
     )
 }
 
 export default LikedSongs
 
-const LikedSongsContainer = (props:any) => {
+
+
+interface LikedSongsContainerProps {
+    tracks: SpotifyApi.SavedTrackObject
+}
+
+const LikedSongsContainer: React.FC<LikedSongsContainerProps> = (props:any) => {
     const { tracks } = props
     const {data: session } = useSession();
     // const topTracks = useRecoilValue(topTrackState)
-    // console.log("topTracks ", topTracks)
+    console.log("tracks ", tracks)
     return (
         <div className='m-8 ml-16'>
             <div className='text-gray-500 flex'>
@@ -52,7 +62,7 @@ const LikedSongsContainer = (props:any) => {
                 <p className='pl-20 basis-1/2'>DATE ADDED</p>
             </div>
             <div className='text-white'> 
-            {tracks ? tracks.map((track: any, i: number) => <LikedSongsCard order={i + 1} key={track.track.id} track={track}/>) : null}
+            {tracks ? tracks.map((track: SpotifyApi.TrackObjectFull, i: number) => <LikedSongsCard order={i + 1} key={track.track.id} track={track}/>) : null}
             </div>
         </div>
         

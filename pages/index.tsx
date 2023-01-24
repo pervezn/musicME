@@ -8,8 +8,7 @@ import { useRecoilState } from 'recoil'
 import { topTrackState } from '../atoms/topTracksAtom'
 import { topArtistState } from '../atoms/topArtistsAtom'
 import Layout from '../components/Layout'
-import SideBar from '../components/SideBar'
-
+// import { UsersTopTracksResponse} from "types/spotify-api"
 import HomeContent from '../components/HomeContent';
 // import type { TrackSearchResponse } from "/spotify-api" 
 
@@ -22,8 +21,8 @@ export default function Home(props: HomeProps) {
   const { data: session, status} = useSession()
   const spotifyApi = useSpotify();
   const [query, setQuery] = useState('')
-  const [topArtists, setTopArtists] = useRecoilState<any | undefined>(topArtistState)
-  const [topTracks, setTopTracks] = useRecoilState<any | undefined>(topTrackState)
+  const [topArtists, setTopArtists] = useRecoilState<SpotifyApi.UsersTopArtistsResponse>(topArtistState)
+  const [topTracks, setTopTracks] = useRecoilState<SpotifyApi.UsersTopTracksResponse>(topTrackState)
 
   // console.log("session in index: ", session)
 
@@ -32,19 +31,19 @@ export default function Home(props: HomeProps) {
   if(spotifyApi.getAccessToken()){
     /* Get a User’s Top Artists*/
     spotifyApi.getMyTopArtists()
-      .then(function(data:any) {
+      .then((data: SpotifyApi.UsersTopArtistsResponse) => {
         // console.log(data.body.items);
-        setTopArtists(data.body.items)
-      }, function(err: any) {
+        setTopArtists(data)
+      }, function(err: unknown) {
         console.log('Something went wrong!', err);
       });
 
     /* Get a User’s Top Tracks*/
     spotifyApi.getMyTopTracks()
-    .then(function(data: any) {
+    .then((data: SpotifyApi.UsersTopTracksResponse) => {
       // console.log(data.body.items);
-      setTopTracks(data.body.items)
-    }, function(err: any) {
+      setTopTracks(data)
+    }, function(err: unknown) {
       console.log('Something went wrong!', err);
     });
   }
@@ -63,7 +62,8 @@ export default function Home(props: HomeProps) {
 
       <Layout> 
         <h1 className='text-2xl md:text-3xl xl:text-5xl font-bold text-white'>Top Artists</h1>
-        <HomeContent topTracks={topTracks} />
+        {console.log(topTracks.body.items)}
+        <HomeContent topTracks={topTracks.body.items} />
         {/* <div className='text-white'>HELLO WORLDS</div> */}
       </Layout>
       

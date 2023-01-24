@@ -21,7 +21,7 @@ const TopTracksContainer = (props:any) => {
 
             </div>
             <div className='text-white'> 
-            {topTracks ? topTracks.map((track: any, i: number) => <TopTracksCard order={i} key={track.id} track={track}/>) : null}
+            {topTracks ? topTracks.map((track: SpotifyApi.SingleTrackResponse, i: number) => <TopTracksCard order={i} key={track.id} track={track}/>) : null}
             </div>
         </div>
         
