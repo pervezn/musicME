@@ -15,10 +15,10 @@ const LikedSongs = () => {
             spotifyApi.getMySavedTracks({
                 limit : 50,
                 offset: 1
-              }).then(function(data:any) {
+              }).then(function(data) {
                 // console.log("LIKED SONGS: ", data.body.items);
                 setSongs(data.body.items)
-              }, function(err: any) {
+              }, function(err) {
                 console.log('Something went wrong!', err);
               });
         }
@@ -34,7 +34,7 @@ const LikedSongs = () => {
 
 export default LikedSongs
 
-const LikedSongsContainer = (props:any) => {
+const LikedSongsContainer = (props) => {
     const { tracks } = props
     const {data: session } = useSession();
     // const topTracks = useRecoilValue(topTrackState)
@@ -52,7 +52,7 @@ const LikedSongsContainer = (props:any) => {
                 <p className='pl-20 basis-1/2'>DATE ADDED</p>
             </div>
             <div className='text-white'> 
-            {tracks ? tracks.map((track: any, i: number) => <LikedSongsCard order={i + 1} key={track.track.id} track={track}/>) : null}
+            {tracks ? tracks.map((track, i) => <LikedSongsCard order={i + 1} key={track.track.id} track={track}/>) : null}
             </div>
         </div>
         
@@ -60,7 +60,7 @@ const LikedSongsContainer = (props:any) => {
 }
 
 
-const LikedSongsCard = (props: any) => {
+const LikedSongsCard = (props) => {
     const {order, track} = props
 
     return (

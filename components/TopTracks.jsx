@@ -6,7 +6,7 @@ import {signOut, useSession, getSession } from 'next-auth/react'
 
 
 
-const TopTracksContainer = (props:any) => {
+const TopTracksContainer = (props) => {
     const { topTracks } = props
     const {data: session } = useSession();
     // const topTracks = useRecoilValue(topTrackState)
@@ -21,7 +21,7 @@ const TopTracksContainer = (props:any) => {
 
             </div>
             <div className='text-white'> 
-            {topTracks ? topTracks.map((track: any, i: number) => <TopTracksCard order={i} key={track.id} track={track}/>) : null}
+            {topTracks ? topTracks.map((track, i) => <TopTracksCard order={i} key={track.id} track={track}/>) : null}
             </div>
         </div>
         
@@ -29,7 +29,7 @@ const TopTracksContainer = (props:any) => {
 }
 
 
-const TopTracksCard = (props: any) => {
+const TopTracksCard = (props) => {
     const {order, track} = props
     const {data: session } = useSession();
     // const topTracks = useRecoilValue<any | undefined>(topTrackState)

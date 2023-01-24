@@ -21,27 +21,27 @@ const ArtistDetails = () => {
     useEffect(() => {
         if(spotifyApi.getAccessToken()){
             // Get an artist
-            spotifyApi.getArtist(id).then(function(data: any) {
+            spotifyApi.getArtist(id).then(function(data) {
                 setArtist(data.body)
-            }, function(err: any) {
+            }, function(err) {
             console.error(err);
             });
 
           // Get an artist's top tracks
           spotifyApi.getArtistTopTracks(id, 'US')
-            .then(function(data: any) {
+            .then(function(data) {
                 // console.log('Artist Top Tracks', data.body);
                 setArtistTopTracks(data.body.tracks)
-            }, function(err: any) {
+            }, function(err) {
                 console.log('Something went wrong!', err);
             });
       
           //Get related artists
           spotifyApi.getArtistRelatedArtists(id)
-            .then(function(data: any) {
+            .then(function(data) {
                 // console.log('Related Artist', data.body);
                 setRelatedArtists(data.body.artists)
-            }, function(err: any) {
+            }, function(err) {
                 console.log('Something went wrong!', err);
             });
         }
@@ -59,7 +59,7 @@ const ArtistDetails = () => {
 
 export default ArtistDetails
 
-const ArtistHeader = (props: any) => {
+const ArtistHeader = (props) => {
     const { artist } = props
 
     return (
@@ -82,14 +82,14 @@ const ArtistHeader = (props: any) => {
 }
 
 
-export const RelatedArtists = (props: any) => {
+export const RelatedArtists = (props) => {
     const { relatedArtists } = props
 
     return (
         <div className='m-8 mt-16'>
             <h3 className='font-bold text-1xl md:text-2xl xl:text-3xl text-white'>Related Artists</h3>
             <div className='flex flex-wrap m-8'>
-                {relatedArtists ? relatedArtists.map((artist: any) => <TopArtistCard key={artist.id} artist={artist}/>) : null}
+                {relatedArtists ? relatedArtists.map((artist) => <TopArtistCard key={artist.id} artist={artist}/>) : null}
             </div>
         </div>
     )

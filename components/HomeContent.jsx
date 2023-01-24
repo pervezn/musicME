@@ -8,7 +8,7 @@ import { HomeIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 
 
-const HomeContent = (props: any) => {
+const HomeContent = (props) => {
     const {topTracks} = props
 
     return (

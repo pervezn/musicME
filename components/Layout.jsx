@@ -4,7 +4,7 @@ import {signOut, useSession, getSession } from 'next-auth/react'
 import HomeContent from './HomeContent'
 
 
-const Layout = (props: any) => {
+const Layout = (props) => {
     const { children } = props
     // console.log("CHILDREN ARE HERE: ",children)
     return (
@@ -20,7 +20,7 @@ const Layout = (props: any) => {
 export default Layout
 
 
-const MainContentLayout = (props: any) => {
+const MainContentLayout = (props) => {
     const {children} = props
     const {data: session } = useSession();
     return(

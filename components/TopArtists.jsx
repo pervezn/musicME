@@ -11,7 +11,7 @@ const TopArtistContainer = () => {
     return (
         <div className='flex flex-wrap'>
             <div className='text-white flex flex-wrap'> 
-              {topArtists ? topArtists.map((artist: any) => <TopArtistCard key={artist.id} artist={artist}/>) : null}
+              {topArtists ? topArtists.map((artist) => <TopArtistCard key={artist.id} artist={artist}/>) : null}
             </div>
         </div>
         
@@ -19,7 +19,7 @@ const TopArtistContainer = () => {
 }
 
 
-export const TopArtistCard = (props: any) => {
+export const TopArtistCard = (props) => {
     const {artist} = props
     const {data: session } = useSession();
     // const topArts = useRecoilValue<any | undefined>(topTrackState)
