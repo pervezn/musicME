@@ -7,7 +7,7 @@ import { useRecoilValue } from 'recoil';
 
 const TopArtistContainer = () => {
     const topArtists = useRecoilValue(topArtistState)
-    console.log("topArtist ", topArtists)
+    // console.log("topArtist ", topArtists)
     return (
         <div className=''>
             <div className='text-white grid grid-flow-row-dense grid-cols-5'> 
