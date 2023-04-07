@@ -7,10 +7,10 @@ import { useRecoilValue } from 'recoil';
 
 const TopArtistContainer = () => {
     const topArtists = useRecoilValue(topArtistState)
-    // console.log("topArtist ", topArtists)
+    console.log("topArtist ", topArtists)
     return (
-        <div className='flex flex-wrap'>
-            <div className='text-white flex flex-wrap'> 
+        <div className=''>
+            <div className='text-white grid grid-flow-row-dense grid-cols-5'> 
               {topArtists ? topArtists.map((artist) => <TopArtistCard key={artist.id} artist={artist}/>) : null}
             </div>
         </div>
@@ -26,9 +26,9 @@ export const TopArtistCard = (props) => {
 
     return (
         <div className='text-white p-5'> 
-            <img  className='flex justify-center' src={artist?.images[2]?.url } alt={artist.name}/>
-            <a href={`/artists/${artist.name}?q=${artist.id}`} className='flex justify-center p-3'>{artist.name}</a>
-            <p className='flex justify-center '>Followers: {artist.followers.total}</p>
+            <img  className='flex' src={artist?.images[2]?.url } alt={artist.name}/>
+            <a href={`/artists/${artist.name}?q=${artist.id}`} className='flex'>{artist.name}</a>
+            <p className='flex '>Popularity: {artist.popularity}</p>
         </div>
     )
 }

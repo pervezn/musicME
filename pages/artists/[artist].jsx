@@ -88,7 +88,7 @@ export const RelatedArtists = (props) => {
     return (
         <div className='m-8 mt-16'>
             <h3 className='font-bold text-1xl md:text-2xl xl:text-3xl text-white'>Related Artists</h3>
-            <div className='flex flex-wrap m-8'>
+            <div className='grid grid-flow-row-dense grid-cols-5'>
                 {relatedArtists ? relatedArtists.map((artist) => <TopArtistCard key={artist.id} artist={artist}/>) : null}
             </div>
         </div>
