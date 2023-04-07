@@ -16,10 +16,10 @@ const Search = () => {
             spotifyApi.getMySavedTracks({
                 limit : 50,
                 offset: 1
-              }).then(function(data:any) {
+              }).then(function(data) {
                 // console.log("LIKED SONGS: ", data.body.items);
                 setSongs(data.body.items)
-              }, function(err: any) {
+              }, function(err) {
                 console.log('Something went wrong!', err);
               });
         }

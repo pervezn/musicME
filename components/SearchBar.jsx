@@ -7,15 +7,15 @@ import TopTracksContainer from './TopTracks'
 const SearchBar = () => {
     const { data: session, status} = useSession()
     const spotifyApi = useSpotify();
-    const [tracks, setTracks] = useState<any | undefined>()
+    const [tracks, setTracks] = useState()
     const [query, setQuery] = useState('')
 
 
-    function searchRequest(e: React.MouseEvent<HTMLInputElement>) {
+    function searchRequest(e) {
         // console.log("here")
         e.preventDefault()
         if(spotifyApi.getAccessToken()){
-          spotifyApi.searchTracks(`artist:${query}`).then((data: any) => setTracks(data.body.tracks.items)).catch((err:any)=> {
+          spotifyApi.searchTracks(`artist:${query}`).then((data) => setTracks(data.body.tracks.items)).catch((err)=> {
             console.log('Something went wrong: Tracks', err)
           })
         }

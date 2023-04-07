@@ -21,10 +21,10 @@ const AlbumDetails = () => {
     useEffect(() => {
         if(spotifyApi.getAccessToken()){
             spotifyApi.getAlbum(id)
-            .then(function(data: any) {
+            .then(function(data) {
                 // console.log('Album information', data.body);
                 setAlbum(data.body)
-            }, function(err: any) {
+            }, function(err) {
                 console.error(err);
             });
 
@@ -43,12 +43,12 @@ const AlbumDetails = () => {
 
 export default AlbumDetails
 
-const AlbumHeader = (props: any) => {
+const AlbumHeader = (props) => {
     const { album } = props
 
     function displayArtists() {
-        let artists: string[] = []
-        album.artists.map((artist:any) => {
+        let artists = []
+        album.artists.map((artist) => {
             artists.push(artist.name)
         })
         let str = artists.join(', ')
@@ -78,7 +78,7 @@ const AlbumHeader = (props: any) => {
 }
 
 
-const AlbumContainer = (props:any) => {
+const AlbumContainer = (props) => {
     const { album } = props
 
     return (
@@ -92,7 +92,7 @@ const AlbumContainer = (props:any) => {
                 <div className='pl-40 basis-1/2'><ClockIcon className='h-5 w-5'/></div>
             </div>
             <div className='text-white'> 
-                {album ? album.tracks.items.map((track: any) => <AlbumTracksCard order={track.track_number} key={track.id} track={track}/>) : null}
+                {album ? album.tracks.items.map((track) => <AlbumTracksCard order={track.track_number} key={track.id} track={track}/>) : null}
             </div>
         </div>
         
@@ -100,12 +100,12 @@ const AlbumContainer = (props:any) => {
 }
 
 
-const AlbumTracksCard = (props: any) => {
+const AlbumTracksCard = (props) => {
     const {order, track} = props
     const router = useRouter();
     // console.log('^^^^^^^^^^^^^ ',track)
     
-    function millisToMinutesAndSeconds(millis: number) {
+    function millisToMinutesAndSeconds(millis) {
         let minutes = Math.floor(millis / 60000);
         let seconds = ((millis % 60000) / 1000).toFixed(0);
         return minutes + ":" + (Number(seconds) < 10 ? '0' : '') + seconds;

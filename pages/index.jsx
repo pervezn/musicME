@@ -13,17 +13,17 @@ import SideBar from '../components/SideBar'
 import HomeContent from '../components/HomeContent';
 // import type { TrackSearchResponse } from "/spotify-api" 
 
-interface HomeProps {
-  genres: Array<string>
-}
+// interface HomeProps {
+//   genres: Array<string>
+// }
 
 
-export default function Home(props: HomeProps) {
+export default function Home(props) {
   const { data: session, status} = useSession()
   const spotifyApi = useSpotify();
   const [query, setQuery] = useState('')
-  const [topArtists, setTopArtists] = useRecoilState<any | undefined>(topArtistState)
-  const [topTracks, setTopTracks] = useRecoilState<any | undefined>(topTrackState)
+  const [topArtists, setTopArtists] = useRecoilState(topArtistState)
+  const [topTracks, setTopTracks] = useRecoilState(topTrackState)
 
   // console.log("session in index: ", session)
 
@@ -32,19 +32,19 @@ export default function Home(props: HomeProps) {
   if(spotifyApi.getAccessToken()){
     /* Get a User’s Top Artists*/
     spotifyApi.getMyTopArtists()
-      .then(function(data:any) {
+      .then(function(data) {
         // console.log(data.body.items);
         setTopArtists(data.body.items)
-      }, function(err: any) {
+      }, function(err) {
         console.log('Something went wrong!', err);
       });
 
     /* Get a User’s Top Tracks*/
     spotifyApi.getMyTopTracks()
-    .then(function(data: any) {
+    .then(function(data) {
       // console.log(data.body.items);
       setTopTracks(data.body.items)
-    }, function(err: any) {
+    }, function(err) {
       console.log('Something went wrong!', err);
     });
   }
@@ -75,7 +75,7 @@ export default function Home(props: HomeProps) {
 }
 
 
-export async function getServerSideProps(context: any) {
+export async function getServerSideProps(context) {
     const session = await getSession(context)
 
     return {
